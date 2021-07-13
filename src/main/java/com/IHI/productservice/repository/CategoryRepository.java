@@ -42,7 +42,11 @@ public class CategoryRepository {
 	}
 	
 	public void updateCategory(Category category, int id) throws Exception{
-		//TAREA
+		try {
+			jdbcTemplate.update("{CALL st_update_category(?,?)}",category.getCategoria(),id);
+		}catch(UncategorizedSQLException  e) {
+			throw new Exception(e.getSQLException().getMessage());
+		}
 	}
 	
 	public void deleteRegion(int id) throws Exception{

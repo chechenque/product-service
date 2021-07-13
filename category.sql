@@ -7,7 +7,10 @@ CREATE TABLE category(
     categoria VARCHAR(100)
 );
 
+DROP PROCEDURE st_update_category;
 INSERT INTO category VALUES(1,'Farmacia');
 INSERT INTO category VALUES(2,'Bebidas');
 CALL st_create_category('Farmagasa');
+CALL st_update_category('FARMAGASA',4);
+SET SQL_SAFE_UPDATES=0;
 SELECT * FROM category;
