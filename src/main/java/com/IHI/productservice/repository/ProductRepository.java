@@ -47,7 +47,11 @@ public class ProductRepository {
 	}
 	
 	public void updateStockProduct(String codigo, int cantidad) throws Exception{
-		
+		try {
+			jdbcTemplate.update("{CALL st_update_stock(?,?)}",codigo,cantidad);
+		}catch(UncategorizedSQLException e) {
+			throw new Exception(e.getSQLException().getLocalizedMessage());
+		}
 	}
 	
 	public void deleteProduct(String codigo) throws Exception{

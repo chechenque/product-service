@@ -51,9 +51,18 @@ public class ControllerProduct {
 		}
 	}
 	
-	@PutMapping("/{codigo}}")
-	public ResponseEntity<Object> updateStockProduct() throws Exception{
-		return null;
+	@PutMapping("/{codigo}")
+	public ResponseEntity<Object> updateStockProduct(@PathVariable("codigo") String codigo, @RequestBody Product producto) throws Exception{
+		try {
+			serviceProduct.updateStockProduct(codigo, producto.getCantidad());
+			return new ResponseEntity<>(HttpStatus.CREATED);
+		}catch(Exception e){
+			if(e.getLocalizedMessage().equals("No pueden haber valores negativos en stock")) {
+				throw new ApiException(HttpStatus.BAD_REQUEST,e.getLocalizedMessage());
+			}else {
+				throw new ApiException(HttpStatus.NOT_FOUND,e.getLocalizedMessage());
+			}
+		}
 	}
 	
 	@DeleteMapping("/{codigo}")
